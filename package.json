@@ -1,9 +1,10 @@
 {
   "name": "react-eds",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "React Ethereum Data Storage",
   "main": "dist/index.js",
   "repository": "https://github.com/LinearDev/react-eds",
+  "keywords": ["react", "redux", "storage"],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

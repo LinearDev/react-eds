@@ -7,7 +7,7 @@ exports.useSlice = exports.useStoreState = void 0;
     @description is a JavaScript library creating bridges between React and non-React scopes by LinearDev (https://lineardev.net)
     @author Eugene K
     @link https://www.npmjs.com/package/react-eds
-    @version 1.0.6
+    @version 1.0.7
 */
 const react_1 = require("react");
 const ts_md5_1 = require("ts-md5");

@@ -4,7 +4,7 @@
     @description is a JavaScript library creating bridges between React and non-React scopes by LinearDev (https://lineardev.net)
     @author Eugene K
     @link https://www.npmjs.com/package/react-eds
-    @version 1.0.7
+    @version 1.0.8
 */
 import { useEffect, useState } from "react";
 import { Md5 } from "ts-md5";
