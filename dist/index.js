@@ -7,10 +7,11 @@ exports.useSlice = exports.useStoreState = void 0;
     @description is a JavaScript library creating bridges between React and non-React scopes by LinearDev (https://lineardev.net)
     @author Eugene K
     @link https://www.npmjs.com/package/react-eds
-    @version 1.0.7
+    @version 1.0.8
 */
 const react_1 = require("react");
 const ts_md5_1 = require("ts-md5");
+const updateEvent = new CustomEvent("reds_update");
 /**
  * @class REDS uses for creating bridge from react and non react scopes
  */
@@ -66,7 +67,11 @@ class StorageController {
      * @param {Function} callback subscribe function
     */
     subscribe(name, callback) {
-        this.listeners[name] = callback;
+        window.addEventListener("reds_update", (data) => {
+            if (data.detail.name() == name) {
+                callback(data.detail.data());
+            }
+        });
     }
     /**
      * Subscription function to detect slice updates
@@ -74,10 +79,13 @@ class StorageController {
      * @param {string} name slice data
     */
     notify(name) {
-        if (this.listeners[name]) {
-            const callback = this.listeners[name];
-            callback(window.EDS[name]);
-        }
+        window.dispatchEvent(new CustomEvent("reds_update", {
+            bubbles: false,
+            detail: {
+                data: () => window.EDS[name],
+                name: () => name
+            }
+        }));
     }
 }
 const storeController = new StorageController();

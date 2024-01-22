@@ -21,6 +21,8 @@ declare global {
     }
 }
 
+const updateEvent = new CustomEvent("reds_update")
+
 /**
  * @class REDS uses for creating bridge from react and non react scopes
  */
@@ -85,7 +87,11 @@ class StorageController {
      * @param {Function} callback subscribe function
     */
     subscribe<T>(name: string, callback: (data: T) => void) {
-        this.listeners[name] = callback;
+        window.addEventListener("reds_update", (data: any) => {
+            if (data.detail.name() == name) {
+                callback(data.detail.data() as T);
+            }
+        })
     }
 
     /**
@@ -94,10 +100,13 @@ class StorageController {
      * @param {string} name slice data
     */
     notify(name: string): void  {
-        if (this.listeners[name]) {
-            const callback = this.listeners[name]
-            callback(window.EDS[name])
-        }
+        window.dispatchEvent(new CustomEvent("reds_update", {
+            bubbles: false,
+            detail: {
+                data: () => window.EDS[name],
+                name: () => name
+            }
+        }))
     }
 }
 
