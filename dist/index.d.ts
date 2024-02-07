@@ -53,6 +53,12 @@ declare class StorageController {
      * @param {string} name slice data
     */
     notify(name: string): void;
+    /**
+     * Used to change data in a slice without changing the whole slice.
+     * @param {string} name The name of slice
+     * @param {Object} object An object containing the data to be merged into the state
+     */
+    reduce(name: string, object: Record<any, any>): void;
 }
 declare const storeController: StorageController;
 export default storeController;

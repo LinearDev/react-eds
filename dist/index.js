@@ -87,6 +87,42 @@ class StorageController {
             }
         }));
     }
+    /**
+     * Used to change data in a slice without changing the whole slice.
+     * @param {string} name The name of slice
+     * @param {Object} object An object containing the data to be merged into the state
+     */
+    reduce(name, object) {
+        let assign = (key, obj, currentState) => {
+            if (typeof obj == "object") {
+                for (const prop in obj) {
+                    if (obj.hasOwnProperty(prop)) {
+                        if (currentState[key] && currentState[key].hasOwnProperty(prop)) {
+                            currentState[key][prop] = obj[prop];
+                        }
+                        else {
+                            currentState[key] = Object.assign(Object.assign({}, currentState[key]), { [prop]: obj[prop] });
+                        }
+                    }
+                }
+            }
+        };
+        const currentState = window.EDS[name];
+        let initialKeys = Object.keys(object);
+        for (const key of initialKeys) {
+            assign(key, object[key], currentState);
+        }
+        //notify
+        window.dispatchEvent(new CustomEvent("reds_update", {
+            bubbles: false,
+            detail: {
+                data: () => window.EDS[name],
+                name: () => name
+            }
+        }));
+        //update store
+        window.EDS[name] = currentState;
+    }
 }
 const storeController = new StorageController();
 exports.default = storeController;

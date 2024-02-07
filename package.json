@@ -1,6 +1,6 @@
 {
   "name": "react-eds",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "React Ethereum Data Storage",
   "main": "dist/index.js",
   "repository": "https://github.com/LinearDev/react-eds",

@@ -127,6 +127,18 @@ Some use cases:
   * Initializing state via API calls
   * Accessing state in browser extensions
 
+### Reduce data without touching whole slice
+The `reds.reduce()` function is designed to update and manage a global state. It takes a `name` parameter as a string to specify the slice name under which is stored, and an `object` parameter which represents the data to be merged into the state.
+
+```ts
+reds.reduce('exampleState', {
+    key1: 'value1',
+    key2: {
+        nestedKey: 'nestedValue'
+    }
+});
+```
+
 ### Subscribe on storage events
 react-eds allows subscribing to changes in global state slices via reds.subscribe().
 
